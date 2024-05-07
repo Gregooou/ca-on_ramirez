@@ -6,7 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
+<<<<<<< HEAD
     <link rel="stylesheet" href="../css/Carreras.css">
+=======
+    <link rel="stylesheet" href="../css/FPs.css">
+>>>>>>> f3f37c4592910e3cb2b2df36cc35f336c221a759
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>Proyecto intermodular</title>
@@ -55,7 +59,11 @@
     <div class="caja">
         <label for="menu"><strong>Grados Superiores</strong></label>
         <select id="menu" size="15">
+<<<<<<< HEAD
             <option value="../FP/fp.php" style="font-size 1500px;">Acondicionamiento Físico y Certificado de Entrenador</option>
+=======
+            <option value="../FP/fp.php">Acondicionamiento Físico y Certificado de Entrenador</option>
+>>>>>>> f3f37c4592910e3cb2b2df36cc35f336c221a759
             <option value="../FP/fp.php">Administración de Sistemas Informáticos en Red</option>
             <option value="../FP/fp.php">Administración y Finanzas</option>
             <option value="../FP/fp.php">Animaciones 3D, Juegos y entornos interactivos</option>

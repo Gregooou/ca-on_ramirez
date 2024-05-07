@@ -180,6 +180,7 @@
                     }
                 });
             });
+<<<<<<< HEAD
             $(document).ready(function() {
         // Manejar el envío del formulario de búsqueda
         $('#searchForm').submit(function(e) {
@@ -228,6 +229,8 @@
             $('#searchResults').html('<p>No se encontraron resultados.</p>');
         }
     }
+=======
+>>>>>>> f3f37c4592910e3cb2b2df36cc35f336c221a759
         </script>
 </body>
 </html>

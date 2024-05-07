@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 // Conexión a la base de datos
 $servidor = "localhost";
@@ -55,6 +56,8 @@ if(isset($_POST['tipoEstudioID'])) {
     }
 }
 ?>
+=======
+>>>>>>> f3f37c4592910e3cb2b2df36cc35f336c221a759
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -101,6 +104,10 @@ if(isset($_POST['tipoEstudioID'])) {
     </div>
 </header>
 <h1>Archivos de Usuarios</h1>
+<<<<<<< HEAD
+=======
+<!-- Botón para abrir el menú desplegable de asignatura y grado -->
+>>>>>>> f3f37c4592910e3cb2b2df36cc35f336c221a759
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Subir archivo
 </button>
@@ -115,6 +122,7 @@ if(isset($_POST['tipoEstudioID'])) {
       </div>
       <div class="modal-body">
         <div class="mb-3">
+<<<<<<< HEAD
         <form action="subir.php" method="post" enctype="multipart/form-data">
             <label for="fileInput" class="form-label">Selecciona un archivo:</label>
             <input type="file" class="form-control" id="fileInput" name="file">
@@ -154,6 +162,39 @@ if(isset($_POST['tipoEstudioID'])) {
         </div>
 
     
+=======
+            <label for="fileInput" class="form-label">Selecciona un archivo:</label>
+            <input type="file" class="form-control" id="fileInput" name="file">
+        </div>
+        <div class="mb-3">
+            <label for="asignaturaSelect" class="form-label">Asignatura:</label>
+            <select class="form-select" id="asignaturaSelect" name="asignatura">
+                <option selected disabled>Selecciona una asignatura</option>
+                <option value="Matemáticas">Matemáticas</option>
+                <option value="Ciencias">Ciencias</option>
+                <option value="Historia">Historia</option>
+                <!-- Agrega más opciones según tus necesidades -->
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="gradoSelect" class="form-label">Grado:</label>
+            <select class="form-select" id="gradoSelect" name="grado">
+                <option selected disabled>Selecciona un grado</option>
+                <option value="Primero">Primero</option>
+                <option value="Segundo">Segundo</option>
+                <option value="Tercero">Tercero</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="gradoSelect" class="form-label">Grado:</label>
+            <select class="form-select" id="gradoSelect" name="grado">
+                <option selected disabled>Selecciona un grado</option>
+                <option value="Primero">Primero</option>
+                <option value="Segundo">Segundo</option>
+                <option value="Tercero">Tercero</option>
+            </select>
+        </div>
+>>>>>>> f3f37c4592910e3cb2b2df36cc35f336c221a759
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -187,6 +228,7 @@ if(isset($_POST['tipoEstudioID'])) {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+<<<<<<< HEAD
         // Manejar clic en el botón de subir archivo (mover el bloque de script aquí)
         $('#submitBtn').click(function() {
             // Obtener los datos del formulario
@@ -215,10 +257,27 @@ if(isset($_POST['tipoEstudioID'])) {
                     // Manejar errores de AJAX
                     console.error(xhr.responseText);
                     // Aquí puedes agregar código para mostrar un mensaje de error al usuario
+=======
+        $('#searchForm').submit(function(event) {
+            event.preventDefault(); // Evitar que el formulario se envíe de manera tradicional
+
+            // Obtener el término de búsqueda ingresado por el usuario
+            var searchTerm = $('#searchInput').val();
+
+            // Enviar el término de búsqueda al script PHP utilizando AJAX
+            $.ajax({
+                type: 'POST',
+                url: 'buscar.php', // Ruta al script PHP que maneja la búsqueda
+                data: { searchTerm: searchTerm }, // Datos a enviar al script PHP
+                success: function(response) {
+                    // Mostrar los resultados de la búsqueda en el contenedor de resultados
+                    $('#searchResults').html(response);
+>>>>>>> f3f37c4592910e3cb2b2df36cc35f336c221a759
                 }
             });
         });
 
+<<<<<<< HEAD
         // Código para cargar dinámicamente los programas basados en el tipo de estudio
         $('#tipoEstudioSelect').change(function() {
             var tipoEstudioID = $(this).val();
@@ -230,6 +289,22 @@ if(isset($_POST['tipoEstudioID'])) {
                     $('#nombreProgSelect').html(response);
                 }
             });
+=======
+        // Manejar clic en el botón de subir archivo
+        $('#submitBtn').click(function() {
+            // Obtener los datos del formulario
+            var file = $('#fileInput').prop('files')[0];
+            var asignatura = $('#asignaturaSelect').val();
+            var grado = $('#gradoSelect').val();
+
+            // Aquí puedes realizar las acciones necesarias con los datos (enviar a servidor, etc.)
+            // Por ahora, simplemente imprimo los datos en la consola
+            console.log('Archivo seleccionado:', file);
+            console.log('Asignatura seleccionada:', asignatura);
+            console.log('Grado seleccionado:', grado);
+
+            // Puedes agregar aquí la lógica para enviar los datos al servidor a través de AJAX
+>>>>>>> f3f37c4592910e3cb2b2df36cc35f336c221a759
         });
     });
 </script>

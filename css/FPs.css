@@ -111,7 +111,10 @@ main {
     text-align: left;
     margin-left: 6%;
     margin-right:6%;
+<<<<<<< HEAD
     font-size: 16px;
+=======
+>>>>>>> f3f37c4592910e3cb2b2df36cc35f336c221a759
 }
 
 /*  label del menú */
@@ -135,6 +138,13 @@ main {
 }
 
 /* opciones del menú desplegable */
+<<<<<<< HEAD
+=======
+#menu option {
+    padding: 8px 4px;
+    padding-top: 3px;
+}
+>>>>>>> f3f37c4592910e3cb2b2df36cc35f336c221a759
 
 /*  opciones seleccionadas del menú desplegable */
 #menu option:checked {
@@ -175,6 +185,7 @@ main {
     }
 }
 
+<<<<<<< HEAD
 #menu option {
     padding: 8px 4px;
     padding-top: 3px;
@@ -184,3 +195,5 @@ main {
 #menu option p{
     font-size: 5vw;
 }
+=======
+>>>>>>> f3f37c4592910e3cb2b2df36cc35f336c221a759
