@@ -1,0 +1,186 @@
+.custom-bg-color {
+    background-color: #003F6F;
+    
+}
+
+body {
+    display:initial;
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-color: #e9f7f5;
+    color:#003F6F;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+main {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.custom-footer {
+    background-color: #003F6F;
+    color: white;
+    text-align: center;
+    padding: 0.5rem;
+    display: none;
+    position:relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    transition: display 0.5s ease; /* Agregado para una transición suave */
+}
+
+.rating {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+.rating .star {
+    font-size: 30px;
+    cursor: pointer;
+    color: #ccc;
+    margin-right: 2px;
+}
+
+.rating .star:hover,
+.rating .star:hover ~ .star {
+    color: #ffcc00;
+}
+
+.rating p {
+    margin: 0;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+
+.card-right {
+    width: 48%;
+    margin-top: 10px;
+}
+
+.row .card-right {
+    margin-left: auto;
+}
+
+.card-link {
+    text-decoration: none; 
+    color: #212529; 
+}
+
+.card-link:hover {
+    color: #212326; 
+}
+
+.blur-on-scroll {
+    backdrop-filter: blur(0);
+    transition: backdrop-filter 0.5s ease-in-out;
+}
+
+.blur-on-scroll.blurred {
+    backdrop-filter: blur(10px); 
+}
+
+.card-body {
+    background-color:  #FAFAD2;
+    color: #003F6F;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.elige, .h2peque {
+    font-size: 50px;
+    color: #003F6F;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+.caja {
+    max-width: 600px;
+    margin: 20px auto;
+    position:static;
+}
+
+/*  contenedor del menú */
+.caja {
+    display: inline-block;
+    border: 1px solid #003F6F;
+    border-radius: 10px;
+    overflow: scroll;
+    background-color: #FAFAD2;
+    text-align: left;
+    margin-left: 6%;
+    margin-right:6%;
+    font-size: 16px;
+}
+
+/*  label del menú */
+.caja label {
+    display: flez;
+    padding: 8px;
+    font-weight: bold;
+    color: #003F6F;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* menú desplegable */
+#menu {
+    display: flex;
+    width: 100%;
+    padding: 8px 11px;
+    color: #003F6F;
+    border:#003F6F;
+    background-color: transparent;
+}
+
+/* opciones del menú desplegable */
+
+/*  opciones seleccionadas del menú desplegable */
+#menu option:checked {
+    background-color: #F1F1F1;
+}
+
+@media screen and (max-width: 600px) {
+    /* Estilos para pantallas pequeñas */
+    .caja {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .dropdown-content {
+        position: static;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .elige{
+        font-size:150% ;
+    }
+
+    .col{
+        display: none;
+    }
+    option{
+        font-size: 16%;
+    }
+} 
+@media only screen and (min-width: 600px) {
+    .caja{
+        display: none;
+    }
+}
+
+#menu option {
+    padding: 8px 4px;
+    padding-top: 3px;
+    font-size: 1400px;
+}
+
+#menu option p{
+    font-size: 5vw;
+}

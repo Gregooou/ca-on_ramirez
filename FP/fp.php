@@ -1,0 +1,237 @@
+<?php
+// Conexión a la base de datos
+$servidor = "localhost";
+$usuario = "ADMINPM";
+$contraseña = "Pr0yect0#Interm0dul4r";
+$base_de_datos = "intermodular definitivo2";
+
+$conexion = new mysqli($servidor, $usuario, $contraseña, $base_de_datos);
+// Verificar si se ha enviado una solicitud AJAX para obtener los programas según el tipo de estudio
+if(isset($_POST['tipoEstudioID'])) {
+    // Obtener el tipo de estudio seleccionado
+    $tipoEstudioID = $_POST['tipoEstudioID'];
+    
+    // Realizar la consulta SQL para obtener los nombreProg según el tipo de estudio
+    $query = "SELECT nombreProg FROM programas 
+              WHERE tipoEstudioID IN (SELECT tipoEstudioID FROM tipo_estudio WHERE tipoestudio = ?)";
+
+    // Preparar la consulta
+    $statement = $conexion->prepare($query);
+
+    // Verificar si la preparación de la consulta fue exitosa
+    if($statement) {
+        // Enlazar el parámetro tipoEstudioID a la consulta
+        $statement->bind_param("s", $tipoEstudioID); // 's' indica que es una cadena de texto
+        
+        // Ejecutar la consulta
+        $statement->execute();
+        
+        // Obtener el resultado de la consulta
+        $result = $statement->get_result();
+        
+        // Crear un arreglo para almacenar los nombres de los programas
+        $programas = array();
+        
+        // Recorrer los resultados y almacenar los nombres de los programas en el arreglo
+        while($row = $result->fetch_assoc()) {
+            $programas[] = $row['nombreProg'];
+        }
+        
+        // Cerrar la consulta
+        $statement->close();
+        
+        // Generar las opciones del segundo select basadas en los programas obtenidos
+        $options = '';
+        foreach($programas as $programa) {
+            $options .= '<option value="' . $programa . '">' . $programa . '</option>';
+        }
+        
+        // Enviar las opciones de vuelta como respuesta a la solicitud AJAX
+        echo $options;
+        exit; // Termina la ejecución del script después de enviar la respuesta
+    } else {
+        // Si hubo un error en la preparación de la consulta, muestra un mensaje de error
+        echo "Error en la preparación de la consulta.";
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivos de Usuarios</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+<header class="p-3 custom-bg-color text-white">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <a href="../Index.php" class="navbar-brand d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <img src="../img/apuntes.jpg" width="150" height="40" class="me-2" alt="Logo">
+            </a>
+            <form id="searchForm" class="col-12 col-lg-auto mb-3 mb-lg-0 ms-lg-auto me-lg-3">
+                <input type="search" id="searchInput" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+            </form>
+            <div id="searchResults"></div>
+            <?php
+            session_start();
+            if(isset($_SESSION["nombreUsu"])) {
+                // Si el usuario ha iniciado sesión, mostramos su nombre
+                $nombreUsu = $_SESSION["nombreUsu"];
+                ?>
+                <div class="text-end" id="loggedUserContainer">
+                    <span class="text-white me-2">¡Hola, <?php echo $nombreUsu; ?>!</span>
+                    <a href="../iniciosesion/cerrar_sesion.php" class="btn btn-danger">Cerrar sesión</a>
+                </div>
+                <?php
+            } else {
+                // Si el usuario no ha iniciado sesión, mostramos los botones de login y sign-up como lo hacías anteriormente
+                ?>
+                <div class="text-end" id="loginSignupContainer">
+                    <button type="button" class="btn btn-outline-light me-2">Login</button>
+                    <button type="button" class="btn btn-warning">Sign-up</button>
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+    </div>
+</header>
+<h1>Archivos de Usuarios</h1>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Subir archivo
+</button>
+
+<!-- Modal para seleccionar asignatura y grado -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Subir Archivo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+        <form action="subir.php" method="post" enctype="multipart/form-data">
+            <label for="fileInput" class="form-label">Selecciona un archivo:</label>
+            <input type="file" class="form-control" id="fileInput" name="file">
+        </form>
+        </div>
+        <div class="mb-3">
+            <label for="tipoEstudioSelect" class="form-label">Tipo de Estudio:</label>
+            <select class="form-select" id="tipoEstudioSelect" name="tipoEstudio">
+                <option selected disabled>Selecciona un tipo de estudio</option>
+                <?php
+                // Verificar la conexión
+                if ($conexion->connect_error) {
+                    die("Error en la conexión: " . $conexion->connect_error);
+                }
+
+                // Consulta para obtener los tipos de estudio
+                $consulta = "SELECT DISTINCT tipoestudio FROM tipo_estudio";
+                $resultados = $conexion->query($consulta);
+
+                // Si hay resultados, generar las opciones del select
+                if ($resultados->num_rows > 0) {
+                    while ($fila = $resultados->fetch_assoc()) {
+                        echo '<option value="' . $fila["tipoestudio"] . '">' . $fila["tipoestudio"] . '</option>';
+                    }
+                } else {
+                    echo '<option value="">No hay tipos de estudio disponibles</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="nombreProgSelect" class="form-label">Nombre del Programa:</label>
+            <select class="form-select" id="nombreProgSelect" name="nombreProg">
+                <!-- Las opciones se cargarán dinámicamente mediante JavaScript -->
+                <option selected disabled>Selecciona un programa</option>
+            </select>
+        </div>
+
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" id="submitBtn">Subir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Nombre de Usuario</th>
+        <th>Asignatura</th>
+        <th>Tema</th>
+        <th>Archivo</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php
+    // El resto del código PHP para mostrar los archivos en la tabla permanece igual
+    ?>
+    </tbody>
+</table>
+<footer class="custom-footer mt-auto">
+    <p>&copy; 2024 Mi Página Web</p>
+    <p>Contacto: infoapuntesuax@gmail.com</p>
+    <p>Email: <EMAIL></p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="<KEY>" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Manejar clic en el botón de subir archivo (mover el bloque de script aquí)
+        $('#submitBtn').click(function() {
+            // Obtener los datos del formulario
+            var file = $('#fileInput').prop('files')[0];
+            var tipoEstudio = $('#tipoEstudioSelect').val();
+            var nombreProg = $('#nombreProgSelect').val();
+
+            // Crear un objeto FormData para enviar el archivo y los datos del formulario
+            var formData = new FormData();
+            formData.append('archivo', file);
+            formData.append('tipoEstudio', tipoEstudio);
+            formData.append('nombreProg', nombreProg);
+
+            $.ajax({
+                type: 'POST',
+                url: 'subir.php', // Ruta al script PHP que maneja la subida de archivos
+                data: formData,
+                processData: false, // Evitar que jQuery procese los datos
+                contentType: false, // No establecer el tipo de contenido
+                success: function(response) {
+                    // Manejar la respuesta del servidor
+                    console.log(response);
+                    // Aquí puedes agregar código para mostrar un mensaje de éxito o error al usuario
+                },
+                error: function(xhr, status, error) {
+                    // Manejar errores de AJAX
+                    console.error(xhr.responseText);
+                    // Aquí puedes agregar código para mostrar un mensaje de error al usuario
+                }
+            });
+        });
+
+        // Código para cargar dinámicamente los programas basados en el tipo de estudio
+        $('#tipoEstudioSelect').change(function() {
+            var tipoEstudioID = $(this).val();
+            $.ajax({
+                type: 'POST',
+                // No especificar URL ya que es el mismo archivo
+                data: { tipoEstudioID: tipoEstudioID },
+                success: function(response) {
+                    $('#nombreProgSelect').html(response);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
